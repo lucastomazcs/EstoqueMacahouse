@@ -30,6 +30,11 @@ body {
   color: #e0e0e0; 
 }
 
+.login-form p {
+  font-size: 4;
+  color: #e0e0e0; 
+}
+
 .custom-input {
   width: 100%;
   padding: 1rem;
