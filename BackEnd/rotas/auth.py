@@ -9,7 +9,7 @@ router = APIRouter()
 
 @router.post("/login")
 def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = db.query(models.User).filter(models.User.username == user.username).first()  # Altere "email" para "username"
+    db_user = db.query(models.User).filter(models.User.username == user.username).first()  
     if not db_user:
         raise HTTPException(status_code=400, detail="Usuário não encontrado")
     
@@ -17,21 +17,21 @@ def login(user: schemas.UserCreate, db: Session = Depends(get_db)):
     if not bcrypt.checkpw(user.password.encode('utf-8'), db_user.password.encode('utf-8')):
         raise HTTPException(status_code=400, detail="Senha inválida")
     
-    return {"message": "Login realizado com sucesso", "user": db_user.name}
+    return {"message": "Login realizado com sucesso", "user": db_user.username}
 
 @router.post("/register")
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = db.query(models.User).filter(models.User.username == user.username).first()  # Altere "email" para "username"
+    db_user = db.query(models.User).filter(models.User.username == user.username).first()  
     if db_user:
-        raise HTTPException(status_code=400, detail="Username já cadastrado")
+        raise HTTPException(status_code=400, detail="Usuário já cadastrado")
 
     # Criptografando a senha
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     # Criando o novo usuário
-    new_user = models.User(username=user.username, name=user.name, password=hashed_password)
+    new_user = models.User(username=user.username, password=hashed_password)
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
     
-    return {"message": "Usuário cadastrado com sucesso", "user": new_user.name}
+    return {"message": "Usuário cadastrado com sucesso", "user": new_user.username}
