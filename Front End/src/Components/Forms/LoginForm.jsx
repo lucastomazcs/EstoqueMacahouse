@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className='login-form'>
@@ -10,29 +12,29 @@ function LoginForm() {
       <form>
         <input 
           type="text" 
-          placeholder="Username" 
+          placeholder="Login" 
           className="custom-input"
         />
         
         <div className="password-container">
           <input 
             type={showPassword ? "text" : "password"} 
-            placeholder="Password" 
+            placeholder="Senha" 
             className="custom-input"
           />
           <i 
             className={`eye-icon ${showPassword ? 'open' : ''}`} 
             onClick={() => setShowPassword(!showPassword)}
           >
-            {showPassword ? 'visibility' : 'visibility_off'}
+            {showPassword ? 'Ocultar' : 'Mostrar'}
           </i>
         </div>
 
-        <Button variant="primary" type="submit" className="custom-button">
+        <Button variant="primary" type="submit" className="custom-button" onClick={() => navigate('/home')}>
           ENTRAR
         </Button> 
 
-        <button className="secondary-button">
+        <button className="secondary-button" onClick={() => navigate('/register')}>
           CADASTRAR
         </button>
       </form>

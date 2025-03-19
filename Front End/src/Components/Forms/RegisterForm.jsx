@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className='login-form'>
@@ -40,14 +43,14 @@ function LoginForm() {
           </i>
         </div>
 
-        <Button variant="primary" type="submit" className="custom-button">
+        <Button variant="primary" type="submit" className="custom-button" onClick={() => navigate('/')}>
           CADASTRAR
         </Button>
 
-        <div>
-          <Button variant="link" onClick={() => navigate("/")}> 
-            Voltar ao Login
-          </Button> {/*Mudar para hyperlink posteriormente*/}
+        <div className="navigation-text">
+          <p>
+            Voltar ao <Link to="/">Login</Link>
+          </p>
         </div>
       </form>
     </div>
