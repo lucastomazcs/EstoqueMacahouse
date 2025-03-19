@@ -6,5 +6,4 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
-    name = Column(String)
     password = Column(String)
