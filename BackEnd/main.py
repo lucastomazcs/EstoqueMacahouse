@@ -1,23 +1,24 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from rotas import auth
-from database import engine, Base
+from sqlalchemy.orm import Session
+from rotas import auth 
+from database import get_db 
 
 app = FastAPI()
 
-# Criação de todas as tabelas no banco de dados
-Base.metadata.create_all(bind=engine)
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Porta do Vite em dev (Padrão)
+    allow_origins=["http://localhost:5173"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(auth.router)
-
 @app.get("/")
-def read_root():
+def read_root(db: Session = Depends(get_db)):
+    return {"message": "Conectado ao banco de dados com sucesso!"}
+
+@app.get("/hello")
+def read_hello():
     return {"message": "Hello, FastAPI!"}
+app.include_router(auth.router)
