@@ -5,7 +5,7 @@ import LoginForm from './Components/Forms/LoginForm';
 import HomePage from './Components/HomePage/HomePage';
 import SaleForm from './Components/Forms/SaleForm';
 import Inventory from './Components/HomePage/Inventory';
-import UserList from './Register';
+import UserList from './components/Register';
 import './App.css';
 
 
