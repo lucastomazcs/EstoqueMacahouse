@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RegisterForm from './Components/Forms/RegisterForm';
+import RegisterForm from './Forms/RegisterForm';
 import api from '../api';
 
 const UserList = () => {
@@ -17,7 +17,7 @@ const UserList = () => {
   const addUsername = async (username) => {
     try {
       await api.post('/jonas', { name: username });
-      fetchUsers();  // Refresh the list after adding a fruit
+      fetchUsers();  // Refresh list
     } catch (error) {
       console.error("Error adding user", error);
     }
