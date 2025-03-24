@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 function SaleForm() {
   const [formData, setFormData] = useState({
     clientName: '',
-    items: [
+    items: [ 
       { name: 'Shorts', quantity: 0 },
       { name: 'Mug', quantity: 0 },
       { name: 'Skirt', quantity: 0 },

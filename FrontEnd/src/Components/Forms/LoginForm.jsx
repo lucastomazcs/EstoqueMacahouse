@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,23 +8,11 @@ function LoginForm() {
 
   return (
     <div className='login-form'>
-      <h3>Cadastrar</h3>
+      <h3>Login</h3>
       <form>
         <input 
           type="text" 
-          placeholder="Nome" 
-          className="custom-input"
-        />
-
-        <input 
-          type="text" 
           placeholder="Login" 
-          className="custom-input"
-        />
-
-        <input 
-          type="text" 
-          placeholder="Email" 
           className="custom-input"
         />
         
@@ -43,15 +30,13 @@ function LoginForm() {
           </i>
         </div>
 
-        <Button variant="primary" type="submit" className="custom-button" onClick={() => navigate('/')}>
-          CADASTRAR
-        </Button>
+        <Button variant="primary" type="submit" className="custom-button" onClick={() => navigate('/home')}>
+          ENTRAR
+        </Button> 
 
-        <div className="navigation-text">
-          <p>
-            Voltar ao <Link to="/">Login</Link>
-          </p>
-        </div>
+        <button className="secondary-button" onClick={() => navigate('/register')}>
+          CADASTRAR 
+        </button>
       </form>
     </div>
   );
