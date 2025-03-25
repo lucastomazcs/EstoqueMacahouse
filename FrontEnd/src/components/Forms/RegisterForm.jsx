@@ -2,18 +2,25 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
-const RegisterForm = ({addUsername}) => {
+const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState('');
+
+  const [formData, setFormData] = useState({
+    username: '',
+    login: '',
+    email: '',
+    password: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (username) {
-      addUsername(username);
-      setUsername(''); 
-    }
+    RegisterForm(formData.username, formData.login, formData.password);
   };
-
+  
   return (
     <div className='login-form'>
       <h3>Cadastrar</h3>
@@ -22,20 +29,24 @@ const RegisterForm = ({addUsername}) => {
           type="text" 
           placeholder="Nome" 
           className="custom-input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          onChange={handleChange}
         />
 
         <input 
           type="text" 
           placeholder="Login" 
           className="custom-input"
+          name="login"
+          onChange={handleChange}
         />
 
         <input 
           type="text" 
           placeholder="Email" 
           className="custom-input"
+          name="email"
+          onChange={handleChange}
         />
         
         <div className="password-container">
@@ -43,6 +54,8 @@ const RegisterForm = ({addUsername}) => {
             type={showPassword ? "text" : "password"} 
             placeholder="Senha" 
             className="custom-input"
+            name="password"
+            onChange={handleChange}
           />
           <i 
             className={`eye-icon ${showPassword ? 'open' : ''}`} 
@@ -62,6 +75,10 @@ const RegisterForm = ({addUsername}) => {
           </p>
         </div>
       </form>
+
+      <main>
+      </main>
+
     </div>
   );
 }
