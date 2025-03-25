@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const RegisterForm = ({addUsername}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
-  // const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -60,7 +58,7 @@ const RegisterForm = ({addUsername}) => {
 
         <div className="navigation-text">
           <p>
-            Voltar ao Login
+            Voltar ao <Link to="/">Login</Link>
           </p>
         </div>
       </form>

@@ -29,7 +29,6 @@ const UserList = () => {
 
   return (
     <div>
-      <h2>User List</h2>
       <ul>
         {users.map((username, index) => (
           <li key={index}>{username.name}</li>
