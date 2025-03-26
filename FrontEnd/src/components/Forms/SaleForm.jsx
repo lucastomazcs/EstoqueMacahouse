@@ -5,9 +5,9 @@ function SaleForm() {
   const [formData, setFormData] = useState({
     clientName: '',
     items: [ 
-      { name: 'Shorts', quantity: 0 },
-      { name: 'Mug', quantity: 0 },
-      { name: 'Skirt', quantity: 0 },
+      { name: 'Samba Canção', quantity: 0 },
+      { name: 'Caneca', quantity: 0 },
+      { name: 'Short-Saia', quantity: 0 },
     ],
   });
 
