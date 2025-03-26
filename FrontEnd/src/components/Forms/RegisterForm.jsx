@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 
-const RegisterForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
+const RegisterForm = ({ addUser }) => {
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     login: '',
     email: '',
     password: ''
   });
+  
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    RegisterForm(formData.username, formData.login, formData.password);
+    addUser(formData); 
+    setFormData({ name: '', login: '', email: '', password: '' });
   };
-  
+
   return (
     <div className='login-form'>
       <h3>Cadastrar</h3>
@@ -29,7 +29,8 @@ const RegisterForm = () => {
           type="text" 
           placeholder="Nome" 
           className="custom-input"
-          name="username"
+          name="name"
+          value={formData.name}
           onChange={handleChange}
         />
 
@@ -38,6 +39,7 @@ const RegisterForm = () => {
           placeholder="Login" 
           className="custom-input"
           name="login"
+          value={formData.login}
           onChange={handleChange}
         />
 
@@ -46,15 +48,17 @@ const RegisterForm = () => {
           placeholder="Email" 
           className="custom-input"
           name="email"
+          value={formData.email}
           onChange={handleChange}
         />
-        
+
         <div className="password-container">
           <input 
             type={showPassword ? "text" : "password"} 
             placeholder="Senha" 
             className="custom-input"
             name="password"
+            value={formData.password}
             onChange={handleChange}
           />
           <i 
@@ -65,22 +69,18 @@ const RegisterForm = () => {
           </i>
         </div>
 
-        <Button variant="primary" type="submit" className="custom-button">
+        <button type="submit" className="custom-button">
           CADASTRAR
-        </Button>
-
-        <div className="navigation-text">
-          <p>
-            Voltar ao <Link to="/">Login</Link>
-          </p>
-        </div>
+        </button>
       </form>
-
-      <main>
-      </main>
-
+      
+      <div className="navigation-text">
+        <p>
+          Voltar ao <Link to="/">Login</Link>
+        </p>
+      </div>
     </div>
   );
-}
+};
 
 export default RegisterForm;

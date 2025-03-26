@@ -8,16 +8,16 @@ const UserList = () => {
   const fetchUsers = async () => {
     try {
       const response = await api.get('/jonas');
-      setUsers(response.data.users);
+      setUsers(response.data.users);  // Store full user data
     } catch (error) {
       console.error("Error fetching users", error);
     }
   };
 
-  const addUsername = async (username) => {
+  const addUser = async (userData) => {
     try {
-      await api.post('/jonas', { name: username });
-      fetchUsers();  // Refresh list
+      await api.post('/jonas', userData);  // Send full user data
+      fetchUsers();  // Refresh user list
     } catch (error) {
       console.error("Error adding user", error);
     }
@@ -30,11 +30,11 @@ const UserList = () => {
   return (
     <div>
       <ul>
-        {users.map((username, index) => (
-          <li key={index}>{username.name}</li>
+        {users.map((user, index) => (
+          <li key={index}>{user.name} - {user.login} - {user.email} - {user.password}</li>
         ))}
       </ul>
-      <RegisterForm addUsername={addUsername} />
+      <RegisterForm addUser={addUser} />
     </div>
   );
 };
