@@ -1,44 +1,32 @@
-import { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginForm from './components/Forms/LoginForm';
+import RegisterForm from './components/Forms/RegisterForm';
+import HomePage from './components/HomePage/HomePage';
+import SaleForm from './components/Forms/SaleForm';
+import Inventory from './components/HomePage/Inventory';
+import UserList from './components/Register';
+import './App.css';
+
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [token, setToken] = useState(null);
-
-  const handleLogin = async () => {
-    const response = await fetch('http://localhost:8000/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      setToken(data.access_token);
-      console.log("Login bem-sucedido!", data);
-    } else {
-      alert('Login falhou');
-    }
-  };
-
   return (
-    <div>
-      <h1>Login</h1>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <button onClick={handleLogin}>Login</button>
+    <div className="App-header">
+      <Router>
+        <Routes>
+          <Route path="/" element={<LoginForm />} />
+          
+          <Route path="/register" element={<UserList />} />
 
-      {token && <p>Token: {token}</p>}
+          <Route path="/sale" element={<SaleForm />} />
+
+          <Route path="/home" element={<HomePage />} />
+
+          <Route path="/manage" element={<Inventory />}/>
+        </Routes>
+      </Router>
+      <main>
+      </main>
     </div>
   );
 }
