@@ -6,6 +6,7 @@ import uvicorn
 import models
 from database import engine, SessionLocal
 from sqlalchemy.orm import Session
+import schemas
 
 app = FastAPI(debug=True)
 
@@ -48,17 +49,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/usuarios/")
-async def register_users(usuario: UserBase, db: db_dependency):
-    db_usuario = models.Users(usuarioNome=usuario.name)
+@app.post("/usuarios/", response_model=schemas.User)
+async def register_users(usuario: schemas.UserCreate, db: db_dependency):
+    db_usuario = models.Users(usuarioNome=usuario.name, usuarioEmail=usuario.email, usuarioSenha=usuario.password)
     db.add(db_usuario)
     db.commit()
     db.refresh(db_usuario)
-    for venda in models.Vendas:
-        db_venda = models.Vendas(nomeCliente=venda.nomeCliente, item=venda.item, idVendedor=db_usuario.id)
+
+    for venda in usuario.vendas:
+        db_venda = models.Vendas(nomeCliente=venda.nomeCliente, item=venda.item, quantidade=venda.quantidade, idVendedor=db_usuario.id)
         db.add(db_venda)
     db.commit()
-
+    return schemas.User(id=db_usuario.id, name=db_usuario.usuarioNome, email=db_usuario.usuarioEmail)
 
 # memory_db = {"jonas": []}  
 
