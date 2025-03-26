@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginForm from './Components/Forms/LoginForm';
+import LoginForm from './components/Forms/LoginForm';
 import RegisterForm from './components/Forms/RegisterForm';
-import HomePage from './Components/HomePage/HomePage';
-import SaleForm from './Components/Forms/SaleForm';
-import Inventory from './Components/HomePage/Inventory';
+import HomePage from './components/HomePage/HomePage';
+import SaleForm from './components/Forms/SaleForm';
+import Inventory from './components/HomePage/Inventory';
 import UserList from './components/Register';
 import './App.css';
 
