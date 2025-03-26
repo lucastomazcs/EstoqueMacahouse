@@ -45,10 +45,6 @@ const UserList = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   return (
     <div>
       <RegisterForm addUser={addUser} />

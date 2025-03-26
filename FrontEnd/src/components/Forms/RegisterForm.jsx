@@ -20,23 +20,30 @@ const RegisterForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
-
+  
+    // Check for empty fields
+    if (!formData.name || !formData.login || !formData.email || !formData.password) {
+      setError("Todos os campos são obrigatórios.");
+      return;
+    }
+  
     try {
       const response = await fetch("http://localhost:8000/register/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
+  
       if (!response.ok) {
-        throw new Error("Failed to register user");
+        throw new Error("Falha ao cadastrar usuário");
       }
-
-      navigate("/"); // Redireciona para a pagina de Login
+  
+      navigate("/"); // Redirect to login page
     } catch (err) {
       setError(err.message);
     }
   };
+  
 
   return (
     <div className="login-form">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import LogoutButton from '../LogoutButton';
 
 function HomePage() {
   const navigate = useNavigate();
@@ -11,9 +12,7 @@ function HomePage() {
   return (
     <div className="homepage-container">
 
-      <button className="leave-button" onClick={handleLeave}>
-        Sair
-      </button>
+    <LogoutButton />
 
       <h3>Bem-vindo ao Sistema de Controle de Estoque</h3>
 

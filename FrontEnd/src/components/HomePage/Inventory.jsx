@@ -13,15 +13,13 @@ function Inventory() {
 
   return (
     <div className="navigation-text">
-      <button className="leave-button" onClick={handleLeave}>
-        Sair
-      </button>
+      <LogoutButton />
       
       <button className="back-button" onClick={backButton}>
         Voltar
       </button>
       
-      <h3 class>Gerenciar Estoque</h3>
+      <h3>Gerenciar Estoque</h3>
       <p>Aqui você pode adicionar ou remover itens do estoque.</p>
     </div>
   );
