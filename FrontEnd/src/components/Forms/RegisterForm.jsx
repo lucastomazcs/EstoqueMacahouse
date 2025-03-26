@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const RegisterForm = ({addUsername}) => {
+const RegisterForm = ({ addUser }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    login: '',
+    email: '',
+    password: ''
+  });
+  
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState('');
-  // const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (username) {
-      addUsername(username);
-      setUsername(''); 
-    }
+    addUser(formData); 
+    setFormData({ name: '', login: '', email: '', password: '' });
   };
 
   return (
@@ -24,27 +29,37 @@ const RegisterForm = ({addUsername}) => {
           type="text" 
           placeholder="Nome" 
           className="custom-input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
         />
 
         <input 
           type="text" 
           placeholder="Login" 
           className="custom-input"
+          name="login"
+          value={formData.login}
+          onChange={handleChange}
         />
 
         <input 
           type="text" 
           placeholder="Email" 
           className="custom-input"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
         />
-        
+
         <div className="password-container">
           <input 
             type={showPassword ? "text" : "password"} 
             placeholder="Senha" 
             className="custom-input"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
           />
           <i 
             className={`eye-icon ${showPassword ? 'open' : ''}`} 
@@ -54,19 +69,19 @@ const RegisterForm = ({addUsername}) => {
           </i>
         </div>
 
-        <Button variant="primary" type="submit" className="custom-button">
+        <button type="submit" className="custom-button">
           CADASTRAR
-        </Button>
-
-        <div className="navigation-text">
-          <p>
-            Voltar ao Login
-          </p>
-        </div>
+        </button>
       </form>
+      
+      <div className="navigation-text">
+        <p>
+          Voltar ao <Link to="/">Login</Link>
+        </p>
+      </div>
     </div>
   );
-}
+};
 
 export default RegisterForm;
-sas
+
