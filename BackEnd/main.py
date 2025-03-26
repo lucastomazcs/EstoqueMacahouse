@@ -49,6 +49,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/usuarios/{id_usuario}", response_model=schemas.User)
+async def ler_usuario(id_usuario: int, db: Session = Depends(get_db)):
+    result = db.query(models.Users).filter(models.Users.id == id_usuario).first()
+    if not result:
+        raise HTTPException(status_code=404, detail='ID nao encontrado')
+    return result
+
 @app.post("/usuarios/", response_model=schemas.User)
 async def register_users(usuario: schemas.UserCreate, db: db_dependency):
     db_usuario = models.Users(usuarioNome=usuario.name, usuarioEmail=usuario.email, usuarioSenha=usuario.password)
@@ -61,17 +68,6 @@ async def register_users(usuario: schemas.UserCreate, db: db_dependency):
         db.add(db_venda)
     db.commit()
     return schemas.User(id=db_usuario.id, name=db_usuario.usuarioNome, email=db_usuario.usuarioEmail)
-
-# memory_db = {"jonas": []}  
-
-# @app.get("/jonas", response_model=Users)
-# def get_users():
-#     return Users(users=memory_db["jonas"]) 
-
-# @app.post("/jonas", response_model=User)
-# def add_user(user: User):
-#     memory_db["jonas"].append(user)
-#     return user  
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

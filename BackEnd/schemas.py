@@ -15,9 +15,8 @@ class UserCreate(BaseModel):
 
 class User(BaseModel):
     id: int
-    name: str
-    email: str
-    
+    usuarioNome: str
+    usuarioEmail: str
 
     class Config:
         orm_mode = True
