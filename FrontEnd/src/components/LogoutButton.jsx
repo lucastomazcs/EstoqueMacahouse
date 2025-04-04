@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api";
 
+// É necessario atualizar const handleLogout para que o Logout funcione
+
 const LogoutButton = () => {
   const navigate = useNavigate();
 
@@ -9,10 +11,10 @@ const LogoutButton = () => {
     try {
       await fetch("http://localhost:8000/logout/", {
         method: "POST",
-        credentials: "include", //Ensure cookies are sent
+        credentials: "include", // Garante que os cookies sejam enviados
       });
   
-      navigate("/"); // Redirect to login page
+      navigate("/"); // Redireciona para a pagina de login
     } catch (error) {
       console.error("Logout failed:", error);
     }

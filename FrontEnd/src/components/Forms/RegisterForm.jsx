@@ -56,6 +56,7 @@ const RegisterForm = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
+          required
         />
 
         <input
@@ -65,15 +66,17 @@ const RegisterForm = () => {
           name="login"
           value={formData.login}
           onChange={handleChange}
+          required
         />
 
         <input
-          type="text"
+          type="email"
           placeholder="Email"
           className="custom-input"
           name="email"
           value={formData.email}
           onChange={handleChange}
+          required
         />
 
         <div className="password-container">
@@ -84,6 +87,7 @@ const RegisterForm = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            required
           />
           <i
             className={`eye-icon ${showPassword ? "open" : ""}`}

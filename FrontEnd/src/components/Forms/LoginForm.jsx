@@ -36,11 +36,12 @@ function LoginForm() {
       <h3>Login</h3>
       <form onSubmit={handleLogin}>
         <input
-          type="text"
+          type="email"
           placeholder="Email"
           className="custom-input"
           value={login}
           onChange={(e) => setLogin(e.target.value)}
+          required
         />
 
         <div className="password-container">
@@ -50,6 +51,8 @@ function LoginForm() {
             className="custom-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+
           />
           <i
             className={`eye-icon ${showPassword ? "open" : ""}`}
