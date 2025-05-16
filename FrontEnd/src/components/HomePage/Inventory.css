@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+}
+
+.inventory-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
+.inventory-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+}
+
+.back-button {
+  background-color: #1db954;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #17a444;
+}
+
+.inventory-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.inventory-description {
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.inventory-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.inventory-table th,
+.inventory-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.inventory-table th {
+  background-color: #2a2a2a;
+  font-weight: bold;
+}
+
+/* Rodapé fixo com as funções */
+.inventory-footer {
+  display: flex;
+  justify-content: space-around;
+  background-color: #121212;
+  padding: 20px;
+  border-top: 1px solid #333;
+  position: sticky;
+  bottom: 0;
+}
+
+.action-box {
+  background-color: #000;
+  border: 2px solid #1db954;
+  color: #1db954;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.action-box:hover {
+  background-color: #1db954;
+  color: black;
+}

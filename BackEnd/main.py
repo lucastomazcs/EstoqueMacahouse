@@ -55,7 +55,7 @@ def create_refresh_token(data: dict):
     data.update({"exp": expire})
     return jwt.encode(data, SECRET_KEY, algorithm=ALGORITHM)
 
-#endpoint do cadas
+#endpoint do cadastro
 @app.post("/register/")
 async def register_user(user: schemas.UserCreate, db: db_dependency):
     #criptografa a senha para guarda-la no banco de dados

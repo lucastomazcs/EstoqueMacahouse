@@ -21,7 +21,7 @@ const RegisterForm = () => {
     event.preventDefault();
     setError("");
   
-    // Check for empty fields
+    // Checa se os campos não estão vazios
     if (!formData.name || !formData.login || !formData.email || !formData.password) {
       setError("Todos os campos são obrigatórios.");
       return;
