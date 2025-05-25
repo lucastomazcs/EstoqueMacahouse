@@ -17,4 +17,13 @@ class Vendas(Base):
     idVendedor = Column(Integer, ForeignKey("usuarios.id"))
     nomeCliente = Column(String, index=True)
     item = Column(String, index=True)
+    quantidade = Column(Integer, index=True) 
+
+class Estoque(Base):
+    __tablename__ = 'estoque'
+
+    id = Column(Integer, primary_key = True, index= True)
+    idAdmin = Column(Integer, ForeignKey("usuarios.id"))
     quantidade = Column(Integer, index=True)
+    item = Column(String, index=True)
+

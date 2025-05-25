@@ -1,32 +1,48 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, status
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from datetime import timedelta
-from dependencies import create_access_token, authenticate_user  # Make sure these exist
+from jose import JWTError, jwt
+from sqlalchemy.orm import Session
+from database import get_db
+import models
+from dependencies import create_access_token, authenticate_user  # mantenha essas funções
 
 router = APIRouter()
 
-#Endpoint do login
+# Configurações do JWT
+SECRET_KEY = "sua_chave_secreta"
+ALGORITHM = "HS256"
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")  # Path para obter token
+
 @router.post("/login")
-async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
-    #verifica se usuario existe
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciais Invalidas")
-    # Se tudo certo, gera e retorna o token de acesso
-    access_token_expires = timedelta(minutes=30)  # Token expires in 30 minutes
-    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciais inválidas")
+    
+    access_token_expires = timedelta(minutes=30)
+    access_token = create_access_token(data={"sub": user.usuarioNome}, expires_delta=access_token_expires)
 
-    response.set_cookie(
-        key="access_token",
-        value=f"Bearer {access_token}",
-        httponly=True,  # Prevent JavaScript access
-        secure=False,   # Set True if using HTTPS
-        samesite="Lax", # Adjust based on frontend/backend setup
+    return {"access_token": access_token, "token_type": "bearer"}
+
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> models.Users:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Não foi possível validar as credenciais",
+        headers={"WWW-Authenticate": "Bearer"},
     )
 
-    return {"message": "Login successful"}
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
 
-@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
-async def logout(response: Response):
-    response.delete_cookie("access_token")  # Removes the cookie
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
+    user = db.query(models.Users).filter(models.Users.usuarioNome == username).first()
+    if user is None:
+        raise credentials_exception
+
+    return user

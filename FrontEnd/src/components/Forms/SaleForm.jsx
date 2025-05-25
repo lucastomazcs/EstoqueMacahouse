@@ -45,8 +45,6 @@ function SaleForm() {
   return (
     <div className="sale-form-container">
       
-      <LogoutButton />
-
       <button className="back-button" onClick={backButton}>
         Voltar
       </button>

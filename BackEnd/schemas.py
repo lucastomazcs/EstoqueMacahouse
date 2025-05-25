@@ -18,5 +18,23 @@ class User(BaseModel):
     usuarioNome: str
     usuarioEmail: str
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
+
+class EstoqueBase(BaseModel):
+    item: str
+    quantidade: int
+
+class EstoqueCreate(EstoqueBase):
+    idAdmin: int
+
+class EstoqueUpdate(EstoqueBase):
+    pass
+
+class EstoqueResponse(EstoqueBase):
+    id: int
+
+    model_config = {
+        "from_attributes": True
+    }
