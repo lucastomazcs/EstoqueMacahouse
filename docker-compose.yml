@@ -1,0 +1,48 @@
+
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: estoque_macahouse_db
+    environment:
+      POSTGRES_USER: postgres # Usuário conforme seu database.py e main.py
+      POSTGRES_PASSWORD: Teste1234 # Senha conforme seu database.py e main.py
+      POSTGRES_DB: estoqueMacahouse # Nome do banco conforme seu database.py e main.py
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persistência dos dados do banco
+    ports:
+      - "5432:5432" # Expõe a porta do PostgreSQL para o host (opcional, para acesso via pgAdmin)
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d estoqueMacahouse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./BackEnd # Caminho para o Dockerfile do backend
+    container_name: estoque_macahouse_backend
+    ports:
+      - "8000:8000" # Mapeia a porta 8000 do contêiner para a porta 8000 do host
+    volumes:
+      # Monta o código do backend para desenvolvimento com hot-reload (se uvicorn --reload for usado no CMD do Dockerfile)
+      # Para um build de "lançamento" puro, esta linha pode ser removida após o build estar estável.
+      - ./BackEnd:/app
+    environment:
+      # URL de conexão que o backend usará para se conectar ao serviço 'db'
+      DATABASE_URL: postgresql://postgres:Teste1234@db:5432/estoqueMacahouse
+    depends_on:
+      db:
+        condition: service_healthy # Garante que o backend só inicie após o db estar saudável
+    # O comando CMD do Dockerfile do backend será usado por padrão.
+    # Se quiser sobrescrever ou adicionar --reload para desenvolvimento aqui:
+    # command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build: ./FrontEnd # Caminho para o Dockerfile do frontend
+    container_name: estoque_macahouse_frontend
+    ports:
+      - "3000:80" # Acessa o frontend via localhost:3000, que mapeia para a porta 80 do Nginx no contêiner
+    depends_on:
+      - backend # O frontend geralmente depende do backend para buscar dados
+
+volumes:
+  pgdata: # Define um volume nomeado para persistir os dados do PostgreSQL
